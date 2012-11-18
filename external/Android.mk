@@ -20,7 +20,7 @@ copy-libs-hack: build-local-hack
 	install -p -m644 libs/armeabi/*.so ../obj/local/armeabi/
 
 project_ldflags:= -Llibs/$(TARGET_ARCH_ABI)/ -Landroid-libs/$(TARGET_ARCH_ABI)/
-icu_project_cflags := -DHAVE_ANDROID_OS=1
+icu_project_cflags := -DHAVE_ANDROID_OS=1 -include $(LOCAL_PATH)/VisibilityIcu.h
 
 #------------------------------------------------------------------------------#
 # libsqlite3
@@ -39,10 +39,15 @@ sqlcipher_files := \
 	sqlcipher/sqlite3.c
 
 sqlcipher_cflags := -DSQLITE_HAS_CODEC -DHAVE_FDATASYNC=0 -Dfdatasync=fsync
+sqlite_visibility_cflags := -fvisibility=hidden \
+	-DSQLITE_API='__attribute__ ((visibility ("default")))' \
 
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS += $(android_sqlite_cflags) $(sqlcipher_cflags)
+LOCAL_CFLAGS += \
+		$(android_sqlite_cflags) \
+		$(sqlcipher_cflags) \
+		$(sqlite_visibility_cflags)
 LOCAL_C_INCLUDES := includes openssl/include sqlcipher
 LOCAL_LDFLAGS += $(project_ldflags)
 LOCAL_LDLIBS += -lcrypto
@@ -76,8 +81,12 @@ LOCAL_ALLOW_UNDEFINED_SYMBOLS := false
 #LOCAL_REQUIRED_MODULES += libsqlcipher libicui18n libicuuc 
 LOCAL_STATIC_LIBRARIES := libsqlcipher libicui18n libicuuc
 
-LOCAL_CFLAGS += $(android_sqlite_cflags) $(sqlite_cflags) \
+LOCAL_CFLAGS += \
+		$(android_sqlite_cflags) \
+		$(sqlcipher_cflags) \
+		$(sqlite_visibility_cflags) \
 		$(icu_project_cflags) \
+		-include  $(LOCAL_PATH)/Visibility.h \
 		-DOS_PATH_SEPARATOR="'/'" -DHAVE_SYS_UIO_H
 
 LOCAL_C_INCLUDES := \
@@ -86,7 +95,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/icu4c/i18n \
 	$(LOCAL_PATH)/icu4c/common \
 	$(LOCAL_PATH)/platform-system-core/include \
-	$(LOCAL_PATH)/platform-frameworks-base/include
+	$(LOCAL_PATH)/platform-frameworks-base/include \
+	$(LOCAL_PATH)/android-sqlite
 
 LOCAL_LDFLAGS += -L${LOCAL_PATH}/android-libs/$(TARGET_ARCH_ABI)/ -L$(LOCAL_PATH)/libs/$(TARGET_ARCH_ABI)/
 LOCAL_LDLIBS := -llog -lutils -lcutils -lcrypto
