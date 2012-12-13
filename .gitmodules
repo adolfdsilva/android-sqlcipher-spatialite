@@ -22,3 +22,12 @@
 [submodule "notepadbot"]
 	path = dist/SQLCipherForAndroid-SDK/samples/notepadbot
 	url = git://github.com/guardianproject/notepadbot.git
+[submodule "external/proj.4"]
+	path = external/proj.4
+	url = git://github.com/littlesavage/proj.4.git
+[submodule "external/geos"]
+	path = external/geos
+	url = git://github.com/libgeos/libgeos.git
+[submodule "external/libspatialite"]
+	path = external/libspatialite
+	url = git@github.com:littlesavage/SpatiaLite.git

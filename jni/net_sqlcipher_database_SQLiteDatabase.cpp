@@ -25,6 +25,7 @@
 
 #include <sqlite3.h>
 #include <sqlite3_android.h>
+#include <spatialite.h>
 #include <string.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
@@ -92,6 +93,15 @@ static void registerLoggingFunc(const char *path) {
     loggingFuncSet = true;
 }
 
+static void spatialiteInit() {
+   static bool spatialiteInitialized = false;
+
+   if (spatialiteInitialized)
+      return;
+   spatialite_init(1);
+   spatialiteInitialized = true;
+}
+
 int native_status(JNIEnv* env, jobject object, jint operation, jboolean reset)
 {
   int value;
@@ -135,6 +145,8 @@ void dbopen(JNIEnv* env, jobject object, jstring pathString, jint flags)
 
     // register the logging func on sqlite. needs to be done BEFORE any sqlite3 func is called.
     registerLoggingFunc(path8);
+
+    spatialiteInit();
 
     // convert our flags into the sqlite flags
     if (flags & CREATE_IF_NECESSARY) {

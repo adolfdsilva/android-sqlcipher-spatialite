@@ -1,9 +1,9 @@
 #
 # Before building using this do:
-#	make -f Android.mk build-local-hack
+#	ndk-build build-local-hack
 #   ndk-build
 #   ndk-build
-#	make -f Android.mk copy-libs-hack
+#	ndk-build copy-libs-hack
 
 PROJECT_ROOT_PATH := $(call my-dir)
 LOCAL_PATH := $(PROJECT_ROOT_PATH)
@@ -18,6 +18,10 @@ sqlcipher/sqlite3.c:
 
 copy-libs-hack: build-local-hack
 	install -p -m644 libs/armeabi/*.so ../obj/local/armeabi/
+
+include $(LOCAL_PATH)/proj4.mk
+include $(LOCAL_PATH)/geos.mk
+include $(LOCAL_PATH)/libspatialite.mk
 
 project_ldflags:= -Llibs/$(TARGET_ARCH_ABI)/ -Landroid-libs/$(TARGET_ARCH_ABI)/
 icu_project_cflags := -DHAVE_ANDROID_OS=1 -include $(LOCAL_PATH)/VisibilityIcu.h
@@ -232,8 +236,8 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := $(icu_src_files)
 LOCAL_C_INCLUDES := $(icu_c_includes)
 LOCAL_CFLAGS := $(icu_local_cflags) -DPIC -fPIC
-LOCAL_RTTI_FLAG := -frtti
-LOCAL_SHARED_LIBRARIES += libgabi++
+#LOCAL_RTTI_FLAG := -frtti
+#LOCAL_SHARED_LIBRARIES += libgabi++
 LOCAL_LDLIBS += $(icu_local_ldlibs)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := libicuuc
@@ -326,8 +330,8 @@ LOCAL_C_INCLUDES := $(c_includes) \
 LOCAL_CFLAGS += -D_REENTRANT -DPIC -DU_I18N_IMPLEMENTATION -fPIC -fvisibility=hidden
 LOCAL_CFLAGS += -O3
 LOCAL_CFLAGS += $(icu_project_cflags)
-LOCAL_RTTI_FLAG := -frtti
-LOCAL_SHARED_LIBRARIES += libgabi++
+#LOCAL_RTTI_FLAG := -frtti
+#LOCAL_SHARED_LIBRARIES += libgabi++
 LOCAL_STATIC_LIBRARIES += libicuuc
 LOCAL_LDLIBS += -lc -lpthread -lm
 LOCAL_MODULE_TAGS := optional
