@@ -45,18 +45,26 @@ copy-libs:
 	mkdir -p ${LIBRARY_ROOT}/armeabi
 	cp ${EXTERNAL_DIR}/libs/armeabi/libsqlcipher_android.so \
 		 ${LIBRARY_ROOT}/armeabi  && \
-	cp ${JNI_DIR}/libs/armeabi/libdatabase_sqlcipher.so \
-		${LIBRARY_ROOT}/armeabi && \
 	cp ${EXTERNAL_DIR}/libs/armeabi/libspatialite.so \
+		 ${LIBRARY_ROOT}/armeabi  && \
+	cp ${JNI_DIR}/libs/armeabi/libdatabase_sqlcipher.so \
 		${LIBRARY_ROOT}/armeabi && \
 	cp ${CURDIR}/bin/classes/sqlcipher.jar ${LIBRARY_ROOT} && \
 	cp $(JNI_DIR)/libs/armeabi/libgnustl_shared.so ${LIBRARY_ROOT}/armeabi && \
-	mkdir -p ${LIBRARY_ROOT}/x86
+	mkdir -p ${LIBRARY_ROOT}/armeabi-v7a && \
+	cp ${EXTERNAL_DIR}/libs/armeabi-v7a/libsqlcipher_android.so \
+		 ${LIBRARY_ROOT}/armeabi-v7a  && \
+	cp ${EXTERNAL_DIR}/libs/armeabi-v7a/libspatialite.so \
+		 ${LIBRARY_ROOT}/armeabi-v7a  && \
+	cp ${JNI_DIR}/libs/armeabi-v7a/libdatabase_sqlcipher.so \
+		${LIBRARY_ROOT}/armeabi-v7a && \
+	cp $(JNI_DIR)/libs/armeabi-v7a/libgnustl_shared.so ${LIBRARY_ROOT}/armeabi-v7a && \
+	mkdir -p ${LIBRARY_ROOT}/x86 && \
 	cp ${EXTERNAL_DIR}/libs/x86/libsqlcipher_android.so \
 		 ${LIBRARY_ROOT}/x86  && \
-	cp ${JNI_DIR}/libs/x86/libdatabase_sqlcipher.so \
-		${LIBRARY_ROOT}/x86 && \
 	cp ${EXTERNAL_DIR}/libs/x86/libspatialite.so \
+		 ${LIBRARY_ROOT}/x86  && \
+	cp ${JNI_DIR}/libs/x86/libdatabase_sqlcipher.so \
 		${LIBRARY_ROOT}/x86 && \
 	cp $(JNI_DIR)/libs/x86/libgnustl_shared.so ${LIBRARY_ROOT}/x86
 
