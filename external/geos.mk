@@ -148,7 +148,6 @@ LOCAL_SRC_FILES := \
 	geos/src/inlines.cpp \
 	geos/src/io/ByteOrderDataInStream.cpp \
 	geos/src/io/ByteOrderValues.cpp \
-	geos/src/io/CLocalizer.cpp \
 	geos/src/io/ParseException.cpp \
 	geos/src/io/StringTokenizer.cpp \
 	geos/src/io/Unload.cpp \
@@ -284,6 +283,11 @@ LOCAL_SRC_FILES := \
 	geos/src/util/GeometricShapeFactory.cpp \
 	geos/src/util/math.cpp \
 	geos/src/util/Profiler.cpp
+
+LOCAL_SRC_FILES += $(GEOS_INCLUDES)/src-io-CLocalizer.cpp
+
+TARGET-process-src-files-tags += $(call add-src-files-target-cflags, \
+   geos/src/io/WKTReader.cpp, -include cctype)
 
 include $(BUILD_STATIC_LIBRARY)
 

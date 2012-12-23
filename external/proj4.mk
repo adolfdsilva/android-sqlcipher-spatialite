@@ -163,5 +163,7 @@ LOCAL_SRC_FILES := \
 	 proj.4/proj/src/pj_initcache.c \
 	 proj.4/proj/src/pj_apply_vgridshift.c
 
+TARGET-process-src-files-tags += $(call add-src-files-target-cflags, proj.4/proj/src/pj_gc_reader.c, -include ctype.h)
+
 include $(BUILD_STATIC_LIBRARY)
 

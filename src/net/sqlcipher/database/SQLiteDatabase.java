@@ -138,7 +138,7 @@ public class SQLiteDatabase extends SQLiteClosable {
 
     public static void loadLibs (Context context, File workingDir)
     {
-        System.loadLibrary("gnustl_shared");
+        System.loadLibrary("stlport_shared");
         System.loadLibrary("sqlcipher_android");
         System.loadLibrary("spatialite");
         System.loadLibrary("database_sqlcipher");

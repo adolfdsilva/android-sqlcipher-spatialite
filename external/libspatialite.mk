@@ -49,7 +49,7 @@ LOCAL_CFLAGS := \
   -DVERSION="\"4.0.0\""
 
 LOCAL_STATIC_LIBRARIES := proj4 geos libsqlcipher_android
-LOCAL_SHARED_LIBRARIES += gnustl_shared
+LOCAL_SHARED_LIBRARIES += stlport_shared
 
 include $(BUILD_SHARED_LIBRARY)
 
