@@ -9,11 +9,26 @@ PROJECT_ROOT_PATH := $(call my-dir)
 LOCAL_PATH := $(PROJECT_ROOT_PATH)
 LOCAL_PRELINK_MODULE := false
 
+# NOTE the following flags,
+#   SQLITE_TEMP_STORE=3 causes all TEMP files to go into RAM. and thats the behavior we want
+#   SQLITE_ENABLE_FTS3   enables usage of FTS3 - NOT FTS1 or 2.
+#   SQLITE_DEFAULT_AUTOVACUUM=1  causes the databases to be subject to auto-vacuum
+ANDROID_SQLITE_CFLAGS :=  -DHAVE_USLEEP=1 \
+	-DSQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576 -DSQLITE_THREADSAFE=1 -DNDEBUG=1 \
+	-DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_TEMP_STORE=3 \
+	-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_BACKWARDS \
+	-DSQLITE_ENABLE_LOAD_EXTENSION
+
+SPATIALITE_SQLITE_CFLAGS := \
+	-DSQLITE_ENABLE_FTS4 \
+	-DSQLITE_ENABLE_ICU \
+	-DSQLITE_ENABLE_RTREE
+
 # how on earth to you make this damn Android build system run cmd line progs?!?!
 build-local-hack: sqlcipher/sqlite3.c
 
 sqlcipher/sqlite3.c:
-	cd ${CURDIR}/sqlcipher && ./configure
+	cd ${CURDIR}/sqlcipher && ./configure CFLAGS="${ANDROID_SQLITE_CFLAGS} ${SPATIALITE_SQLITE_CFLAGS}"
 	make -C sqlcipher sqlite3.c
 
 copy-libs-hack: build-local-hack
@@ -29,16 +44,6 @@ icu_project_cflags := -DHAVE_ANDROID_OS=1 -include $(LOCAL_PATH)/VisibilityIcu.h
 #------------------------------------------------------------------------------#
 # libsqlite3
 
-# NOTE the following flags,
-#   SQLITE_TEMP_STORE=3 causes all TEMP files to go into RAM. and thats the behavior we want
-#   SQLITE_ENABLE_FTS3   enables usage of FTS3 - NOT FTS1 or 2.
-#   SQLITE_DEFAULT_AUTOVACUUM=1  causes the databases to be subject to auto-vacuum
-android_sqlite_cflags :=  -DHAVE_USLEEP=1 \
-	-DSQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576 -DSQLITE_THREADSAFE=1 -DNDEBUG=1 \
-	-DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_TEMP_STORE=3 \
-	-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_BACKWARDS \
-	-DSQLITE_ENABLE_LOAD_EXTENSION
-
 sqlcipher_files := \
 	sqlcipher/sqlite3.c
 
@@ -49,10 +54,12 @@ sqlite_visibility_cflags := -fvisibility=hidden \
 include $(CLEAR_VARS)
 
 LOCAL_CFLAGS += \
-		$(android_sqlite_cflags) \
+		$(ANDROID_SQLITE_CFLAGS) \
+		$(SPATIALITE_SQLITE_CFLAGS) \
 		$(sqlcipher_cflags) \
-		$(sqlite_visibility_cflags)
-LOCAL_C_INCLUDES := includes openssl/include sqlcipher
+		$(sqlite_visibility_cflags) \
+		$(icu_project_cflags)
+LOCAL_C_INCLUDES := includes openssl/include sqlcipher icu4c/i18n icu4c/common
 LOCAL_LDFLAGS += $(project_ldflags)
 LOCAL_LDLIBS += -lcrypto
 LOCAL_MODULE    := libsqlcipher
@@ -86,7 +93,8 @@ LOCAL_ALLOW_UNDEFINED_SYMBOLS := false
 LOCAL_STATIC_LIBRARIES := libsqlcipher libicui18n libicuuc
 
 LOCAL_CFLAGS += \
-		$(android_sqlite_cflags) \
+		$(ANDROID_SQLITE_CFLAGS) \
+		$(SPATIALITE_SQLITE_CFLAGS) \
 		$(sqlcipher_cflags) \
 		$(sqlite_visibility_cflags) \
 		$(icu_project_cflags) \
