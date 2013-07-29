@@ -1,11 +1,17 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Should be defined in order to enable GeoPackage support. */
+/* #undef ENABLE_GEOPACKAGE */
+
+/* Should be defined in order to enable LIBXML2 support. */
+/* #undef ENABLE_LIBXML2 */
+
 /* Should be defined in order to enable LWGEOM support. */
 /* #undef ENABLE_LWGEOM */
 
 /* Should be defined in order to enable GEOS_ADVANCED support. */
-/* #define GEOS_ADVANCED 1 */
+#define GEOS_ADVANCED 1
 
 /* Should be defined in order to enable GEOS_TRUNK experimental support. */
 /* #undef GEOS_TRUNK */
@@ -47,7 +53,10 @@
 /* #undef HAVE_LIBLWGEOM_H */
 
 /* Define to 1 if you have the `sqlite3' library (-lsqlite3). */
-/* #define HAVE_LIBSQLITE3 1 */
+#define HAVE_LIBSQLITE3 1
+
+/* Define to 1 if you have the `z' library (-lz). */
+#define HAVE_LIBZ 1
 
 /* Define to 1 if you have the `localtime_r' function. */
 #define HAVE_LOCALTIME_R 1
@@ -129,6 +138,9 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
+/* Define to 1 if you have the <zlib.h> header file. */
+#define HAVE_ZLIB_H 1
+
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
 /* #undef LSTAT_FOLLOWS_SLASHED_SYMLINK */
@@ -141,19 +153,19 @@
 #define NDEBUG 1
 
 /* Should be defined in order to disable EPSG full support. */
-/* #define OMIT_EPSG 1 */
+#define OMIT_EPSG 1
 
 /* Should be defined in order to disable FREEXL support. */
-/* #define OMIT_FREEXL 1 */
+#define OMIT_FREEXL 1
 
 /* Should be defined in order to disable GEOCALLBACKS support. */
-/* #define OMIT_GEOCALLBACKS 1 */
+#define OMIT_GEOCALLBACKS 1
 
 /* Should be defined in order to disable GEOS support. */
 /* #undef OMIT_GEOS */
 
 /* Should be defined in order to disable ICONV support. */
-/* #define OMIT_ICONV 1 */
+#define OMIT_ICONV 1
 
 /* Should be defined in order to disable MATHSQL support. */
 /* #undef OMIT_MATHSQL */
@@ -171,7 +183,7 @@
 #define PACKAGE_NAME "libspatialite"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libspatialite 4.0.0"
+#define PACKAGE_STRING "libspatialite 4.1.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libspatialite"
@@ -180,7 +192,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.0.0"
+#define PACKAGE_VERSION "4.1.1"
+
+/* Should be defined when linking liblwgeom from PostGIS 2.1 (or later). */
+/* #undef POSTGIS_2_1 */
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -192,7 +207,7 @@
 /* #undef TM_IN_SYS_TIME */
 
 /* Version number of package */
-#define VERSION "4.0.0"
+#define VERSION "4.1.1"
 
 /* Must be =64 in order to enable huge-file support. */
 #define _FILE_OFFSET_BITS 64
