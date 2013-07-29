@@ -16,6 +16,9 @@ endif
 
 include $(CLEAR_VARS)
 
+# expose the sqlcipher C API
+LOCAL_CFLAGS += -DSQLITE_HAS_CODEC
+
 LOCAL_SRC_FILES:= \
 	net_sqlcipher_database_SQLiteCompiledSql.cpp \
 	net_sqlcipher_database_SQLiteDatabase.cpp \
@@ -37,6 +40,7 @@ LOCAL_C_INCLUDES += \
 	$(EXTERNAL_PATH)/platform-system-core/include \
 	$(LOCAL_PATH)/include \
 	$(EXTERNAL_PATH)/platform-frameworks-base/include \
+	$(EXTERNAL_PATH)/icu4c/common \
 	$(EXTERNAL_PATH)/libspatialite/src/headers
 
 LOCAL_SHARED_LIBRARIES := \
@@ -55,8 +59,10 @@ LOCAL_LDLIBS += -ldl -llog
 LOCAL_LDLIBS += -lnativehelper -landroid_runtime -lutils -lbinder
 # these are build in the ../external section
 
-#LOCAL_REQUIRED_MODULES += libsqlcipher libicuuc libicui18n
-LOCAL_LDLIBS += -lsqlcipher_android -lspatialite
+LOCAL_LDLIBS  += -lsqlcipher_android
+LOCAL_LDFLAGS += -L../obj/local/$(TARGET_ARCH_ABI)
+LOCAL_LDLIBS  += -licui18n -licuuc
+LOCAL_LDLIBS  += -lspatialite
 
 ifeq ($(WITH_MALLOC_LEAK_CHECK),true)
 	LOCAL_CFLAGS += -DMALLOC_LEAK_CHECK

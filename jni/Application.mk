@@ -5,5 +5,5 @@ APP_STL := stlport_shared
 APP_CPPFLAGS += -frtti -fexceptions
 APP_PLATFORM := android-7
 
-NDK_TOOLCHAIN_VERSION=4.7
+#NDK_TOOLCHAIN_VERSION=4.7
 
