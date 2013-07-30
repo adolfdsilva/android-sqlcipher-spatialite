@@ -2,10 +2,8 @@
 # Before building using this do:
 #	ndk-build build-local-hack
 #   ndk-build
-#   ndk-build
-#	ndk-build copy-libs-hack
 
-PROJECT_ROOT_PATH := $(call my-dir)
+PROJECT_ROOT_PATH := $(call my-dir)/..
 LOCAL_PATH := $(PROJECT_ROOT_PATH)
 LOCAL_PRELINK_MODULE := false
 
@@ -30,9 +28,6 @@ build-local-hack: sqlcipher/sqlite3.c
 sqlcipher/sqlite3.c:
 	cd ${CURDIR}/sqlcipher && ./configure CFLAGS="${ANDROID_SQLITE_CFLAGS} ${SPATIALITE_SQLITE_CFLAGS}"
 	make -C sqlcipher sqlite3.c
-
-copy-libs-hack: build-local-hack
-	install -p -m644 libs/armeabi/*.so ../obj/local/armeabi/
 
 include $(LOCAL_PATH)/proj4.mk
 include $(LOCAL_PATH)/geos.mk
@@ -129,7 +124,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 #include $(CLEAR_VARS)
 
-ICU_COMMON_PATH := icu4c/common
+ICU_COMMON_PATH := $(LOCAL_PATH)/icu4c/common
 
 # new icu common build begin
 
@@ -260,8 +255,8 @@ include $(BUILD_STATIC_LIBRARY)
 #--------------
 include $(CLEAR_VARS)
 LOCAL_PATH := $(PROJECT_ROOT_PATH)
+ICU_I18N_PATH := $(LOCAL_PATH)/icu4c/i18n
 #ICU_I18N_PATH := $(LOCAL_PATH)/icu4c/i18n
-ICU_I18N_PATH := icu4c/i18n
 
 # start new icu18n
 
