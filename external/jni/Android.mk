@@ -34,7 +34,7 @@ include $(LOCAL_PATH)/geos.mk
 include $(LOCAL_PATH)/libspatialite.mk
 
 project_ldflags:= -Llibs/$(TARGET_ARCH_ABI)/ -Landroid-libs/$(TARGET_ARCH_ABI)/
-icu_project_cflags := -DHAVE_ANDROID_OS=1 -include $(LOCAL_PATH)/VisibilityIcu.h
+icu_project_cflags := -DHAVE_ANDROID_OS=1
 
 #------------------------------------------------------------------------------#
 # libsqlite3
