@@ -60,6 +60,7 @@ clean:
 	done
 
 copy-libs:
+	cp ${CURDIR}/bin/classes/sqlcipher.jar ${LIBRARY_ROOT}
 	for _arch in armeabi armeabi-v7a x86; do \
 	    install -p $(addprefix ${EXTERNAL_DIR}/libs/$$_arch/, \
 	    	${EXTERNAL_LIBS}) ${LIBRARY_ROOT}/$$_arch/; \
