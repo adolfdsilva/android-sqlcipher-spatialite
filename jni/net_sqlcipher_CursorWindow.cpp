@@ -19,7 +19,6 @@
 
 #include <jni.h>
 #include <JNIHelp.h>
-#include <android_runtime/AndroidRuntime.h>
 
 #include <utils/Log.h>
 
@@ -733,7 +732,7 @@ int register_android_database_CursorWindow(JNIEnv * env)
         return -1;
     }
 
-    return android::AndroidRuntime::registerNativeMethods(env, "net/sqlcipher/CursorWindow",
+    return jniRegisterNativeMethods(env, "net/sqlcipher/CursorWindow",
             sMethods, NELEM(sMethods));
 }
 

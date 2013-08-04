@@ -1,3 +1,4 @@
+LOCAL_PATH := $(call my-dir)
 include ${CLEAR_VARS}
 
 LOCAL_SRC_FILES := \
@@ -64,11 +65,9 @@ LOCAL_SRC_FILES := \
 
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/libspatialite/src/headers \
-    $(LOCAL_PATH)/libspatialite-includes
+    $(LOCAL_PATH)/config
 
 LOCAL_MODULE := libspatialite
-
-LOCAL_LDLIBS := -ldl -llog -lz
 
 LOCAL_CFLAGS := \
   -fvisibility=hidden \
@@ -77,8 +76,9 @@ LOCAL_CFLAGS := \
   -DOMIT_ICONV \
   -DVERSION="\"4.1.1\""
 
-LOCAL_STATIC_LIBRARIES := proj4 geos libsqlcipher_android
-LOCAL_SHARED_LIBRARIES += stlport_shared
+LOCAL_STATIC_LIBRARIES := proj4 geos
 
-include $(BUILD_SHARED_LIBRARY)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/libspatialite/src/headers
+LOCAL_EXPORT_LDLIBS := -llog -lz
 
+include $(BUILD_STATIC_LIBRARY)

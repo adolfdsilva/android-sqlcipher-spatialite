@@ -2,8 +2,7 @@
 .DEFAULT_GOAL := all
 LIBRARY_ROOT := libs
 JNI_DIR := ${CURDIR}/jni
-EXTERNAL_DIR := ${CURDIR}/external
-SQLCIPHER_DIR := ${EXTERNAL_DIR}/sqlcipher
+SQLCIPHER_DIR := $(CURDIR)/ndk-modules/sqlcipher
 LICENSE := SQLCIPHER_LICENSE
 ASSETS_DIR := assets
 LATEST_TAG := $(shell git tag | sort -r | head -1)
@@ -11,11 +10,7 @@ SECOND_LATEST_TAG := $(shell git tag | sort -r | head -2 | tail -1)
 RELEASE_DIR := "SQLCipher for Android ${LATEST_TAG}"
 CHANGE_LOG_HEADER := "Changes included in the ${LATEST_TAG} release of SQLCipher for Android:"
 README := ${RELEASE_DIR}/README
-
-CPP_RUNTIME_SO := libstlport_shared.so
-EXTERNAL_LIBS := libsqlcipher_android.so libspatialite.so
-
-NDK_BUILD_FLAGS ?= -j5
+MAKE_JOBS ?= 16
 
 init:
 	git submodule update --init
@@ -24,13 +19,12 @@ init:
 all: build-external build-jni build-java copy-libs
 
 build-external:
-	cd ${EXTERNAL_DIR} && \
-	ndk-build build-local-hack && \
-	ndk-build ${NDK_BUILD_FLAGS}
+	cd ${SQLCIPHER_DIR} && \
+	ndk-build APP_BUILD_SCRIPT=Android.mk build-local-hack
 
 build-jni:
-	cd ${JNI_DIR} && \
-	ndk-build ${NDK_BUILD_FLAGS}
+	cd ${CURDIR} && \
+	ndk-build -j${MAKE_JOBS}
 
 build-java:
 	ant release && \
@@ -52,19 +46,12 @@ release:
 clean:
 	-rm SQLCipher\ for\ Android\*.zip
 	ant clean
-	cd ${EXTERNAL_DIR} && ndk-build clean
-	-cd ${SQLCIPHER_DIR} && make clean
-	cd ${JNI_DIR} && ndk-build clean
-	-for _arch in armeabi armeabi-v7a x86; do \
-	    rm $(addprefix ${LIBRARY_ROOT}/$$_arch/, ${EXTERNAL_LIBS}); \
-	done
+	cd ${CURDIR} && ndk-build clean
+	-cd ${SQLCIPHER_DIR}/sqlcipher && make clean
+	-rm ${LIBRARY_ROOT}/sqlcipher.jar
 
 copy-libs:
 	cp ${CURDIR}/bin/classes/sqlcipher.jar ${LIBRARY_ROOT}
-	for _arch in armeabi armeabi-v7a x86; do \
-	    install -p $(addprefix ${EXTERNAL_DIR}/libs/$$_arch/, \
-	    	${EXTERNAL_LIBS}) ${LIBRARY_ROOT}/$$_arch/; \
-	done
 
 copy-libs-dist:
 	cp ${LIBRARY_ROOT}/*.jar dist/SQLCipherForAndroid-SDK/libs/ && \

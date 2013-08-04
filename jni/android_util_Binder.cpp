@@ -37,8 +37,6 @@
 #include <binder/IServiceManager.h>
 #include <utils/threads.h>
 
-#include <android_runtime/AndroidRuntime.h>
-
 //#undef LOGV
 //#define LOGV(...) fprintf(stderr, __VA_ARGS__)
 
@@ -685,7 +683,7 @@ static int int_register_android_os_Binder(JNIEnv* env)
         = env->GetFieldID(clazz, "mObject", "I");
     assert(gBinderOffsets.mObject);
 
-    return AndroidRuntime::registerNativeMethods(
+    return jniRegisterNativeMethods(
         env, kBinderPathName,
         gBinderMethods, NELEM(gBinderMethods));
 }
@@ -765,7 +763,7 @@ static int int_register_android_os_BinderInternal(JNIEnv* env)
         = env->GetStaticMethodID(clazz, "forceBinderGc", "()V");
     assert(gBinderInternalOffsets.mForceGc);
 
-    return AndroidRuntime::registerNativeMethods(
+    return jniRegisterNativeMethods(
         env, kBinderInternalPathName,
         gBinderInternalMethods, NELEM(gBinderInternalMethods));
 }
@@ -1081,7 +1079,7 @@ static int int_register_android_os_BinderProxy(JNIEnv* env)
         = env->GetFieldID(clazz, "mSelf", "Ljava/lang/ref/WeakReference;");
     assert(gBinderProxyOffsets.mSelf);
 
-    return AndroidRuntime::registerNativeMethods(
+    return jniRegisterNativeMethods(
         env, kBinderProxyPathName,
         gBinderProxyMethods, NELEM(gBinderProxyMethods));
 }
@@ -1678,7 +1676,7 @@ static int int_register_android_os_Parcel(JNIEnv* env)
     LOG_FATAL_IF(gStrictModeCallbackOffsets.mCallback == NULL,
                  "Unable to find strict mode callback.");
 
-    return AndroidRuntime::registerNativeMethods(
+    return jniRegisterNativeMethods(
         env, kParcelPathName,
         gParcelMethods, NELEM(gParcelMethods));
 }

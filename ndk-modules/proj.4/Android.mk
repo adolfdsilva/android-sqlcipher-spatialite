@@ -1,14 +1,13 @@
+LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-PROJ4_PATH := proj.4/proj
-PROJ4_INCLUDES := proj.4-includes
+PROJ4_PATH := $(LOCAL_PATH)/proj.4/proj
+PROJ4_CONFIG := $(LOCAL_PATH)/config
 
-# ./configure --build=x86_64-pc-linux-gnu --host=arm-linux-eabi
-# find $(PROJ4_PATH)/ -name "*.c" | grep -Ev "tests|doc" | sort | awk '{ print "\t"$1" \\" }'
 LOCAL_MODULE    := proj4
 LOCAL_CFLAGS += -fvisibility=hidden
-LOCAL_C_INCLUDES := $(PROJ4_PATH)/src $(PROJ4_INCLUDES)
-LOCAL_EXPORT_C_INCLUDES := $(PROJ4_PATH)/src $(PROJ4_INCLUDES)
+LOCAL_C_INCLUDES := $(PROJ4_PATH)/src $(PROJ4_CONFIG)
+LOCAL_EXPORT_C_INCLUDES := $(PROJ4_PATH)/src
 LOCAL_SRC_FILES := \
 	 proj.4/proj/src/PJ_aeqd.c \
 	 proj.4/proj/src/PJ_gnom.c \

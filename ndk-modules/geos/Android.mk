@@ -1,21 +1,9 @@
+LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
-
-GEOS_PATH := geos
-GEOS_INCLUDES := geos-includes/
-
-LOCAL_MODULE := geos
-LOCAL_CFLAGS += -fvisibility=hidden
-LOCAL_C_INCLUDES := \
-   	$(GEOS_PATH)/include \
-	$(GEOS_INCLUDES)/include \
-	$(GEOS_INCLUDES)/capi  \
-	$(GEOS_INCLUDES)
-
-LOCAL_EXPORT_C_INCLUDES := $(GEOS_PATH)/include $(GEOS_INCLUDES)/include $(GEOS_INCLUDES)/capi
 
 # ./configure --build=x86_64-pc-linux-gnu --host=arm-linux-eabi
 # find $(GEOS_PATH)/ -name "*.cpp" | grep -Ev "tests|doc" | sort | awk '{ print "\t"$1" \\" }'
-LOCAL_SRC_FILES := \
+GEOS_FILES :=  \
 	geos/capi/geos_c.cpp \
 	geos/capi/geos_ts_c.cpp \
 	geos/src/algorithm/Angle.cpp \
@@ -284,10 +272,22 @@ LOCAL_SRC_FILES := \
 	geos/src/util/math.cpp \
 	geos/src/util/Profiler.cpp
 
-LOCAL_SRC_FILES += $(GEOS_INCLUDES)/src-io-CLocalizer.cpp
+GEOS_PATH := $(LOCAL_PATH)/geos
+GEOS_INCLUDES := $(LOCAL_PATH)/include
+
+LOCAL_MODULE := geos
+LOCAL_CPP_FEATURES := rtti exceptions
+LOCAL_CFLAGS += -fvisibility=hidden
+LOCAL_C_INCLUDES := \
+   	$(GEOS_PATH)/include \
+	$(GEOS_INCLUDES)/include \
+	$(GEOS_INCLUDES)/capi  \
+	$(GEOS_INCLUDES)
+LOCAL_EXPORT_C_INCLUDES := $(GEOS_PATH)/include $(GEOS_INCLUDES)/include $(GEOS_INCLUDES)/capi
+LOCAL_SRC_FILES := $(GEOS_FILES)
+LOCAL_SRC_FILES += src-io-CLocalizer.cpp
 
 TARGET-process-src-files-tags += $(call add-src-files-target-cflags, \
    geos/src/io/WKTReader.cpp, -include cctype)
 
 include $(BUILD_STATIC_LIBRARY)
-

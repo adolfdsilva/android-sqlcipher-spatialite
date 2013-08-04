@@ -21,7 +21,6 @@
 
 #include <jni.h>
 #include <JNIHelp.h>
-#include <android_runtime/AndroidRuntime.h>
 
 #include <sqlite3.h>
 #include <sqlite3_android.h>
@@ -591,7 +590,7 @@ int register_android_database_SQLiteDatabase(JNIEnv *env)
         return -1;
     }
 
-    return android::AndroidRuntime::registerNativeMethods(env, "net/sqlcipher/database/SQLiteDatabase", sMethods, NELEM(sMethods));
+    return jniRegisterNativeMethods(env, "net/sqlcipher/database/SQLiteDatabase", sMethods, NELEM(sMethods));
 }
 
 
