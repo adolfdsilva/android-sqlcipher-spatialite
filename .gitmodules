@@ -1,24 +1,24 @@
-[submodule "external/openssl"]
-	path = external/openssl
-	url = https://github.com/guardianproject/openssl-android.git
-[submodule "external/sqlcipher"]
-	path = external/sqlcipher
-	url = https://github.com/sqlcipher/sqlcipher.git
-[submodule "external/dalvik"]
-	path = external/dalvik
-	url = https://github.com/android/platform_dalvik.git
-[submodule "external/android-sqlite"]
-	path = external/android-sqlite
-	url = https://github.com/android/platform_external_sqlite.git
-[submodule "external/platform-system-core"]
-	path = external/platform-system-core
-	url = https://github.com/android/platform_system_core.git
-[submodule "external/platform-frameworks-base"]
-	path = external/platform-frameworks-base
-	url = https://github.com/android/platform_frameworks_base.git
-[submodule "external/icu4c"]
-	path = external/icu4c
-	url = https://github.com/android/platform_external_icu4c.git
 [submodule "notepadbot"]
 	path = dist/SQLCipherForAndroid-SDK/samples/notepadbot
 	url = https://github.com/guardianproject/notepadbot.git
+[submodule "ndk-modules/android-sqlite/android-sqlite"]
+	path = ndk-modules/android-sqlite/android-sqlite
+	url = https://github.com/android/platform_external_sqlite.git
+[submodule "ndk-modules/android-platform/platform_system_core"]
+	path = ndk-modules/android-platform/platform_system_core
+	url = https://github.com/android/platform_system_core.git
+[submodule "ndk-modules/android-platform/platform_frameworks_base"]
+	path = ndk-modules/android-platform/platform_frameworks_base
+	url = https://github.com/android/platform_frameworks_base.git
+[submodule "ndk-modules/icu4c/icu4c"]
+	path = ndk-modules/icu4c/icu4c
+	url = https://github.com/android/platform_external_icu4c.git
+[submodule "ndk-modules/android-openssl/openssl"]
+	path = ndk-modules/android-openssl/openssl
+	url = https://github.com/guardianproject/openssl-android.git
+[submodule "ndk-modules/libnativehelper/libnativehelper"]
+	path = ndk-modules/libnativehelper/libnativehelper
+	url = https://android.googlesource.com/platform/libnativehelper
+[submodule "ndk-modules/sqlcipher/sqlcipher"]
+	path = ndk-modules/sqlcipher/sqlcipher
+	url = https://github.com/sqlcipher/sqlcipher.git

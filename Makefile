@@ -2,8 +2,7 @@
 .DEFAULT_GOAL := all
 LIBRARY_ROOT := libs
 JNI_DIR := ${CURDIR}/jni
-EXTERNAL_DIR := ${CURDIR}/external
-SQLCIPHER_DIR := ${EXTERNAL_DIR}/sqlcipher
+SQLCIPHER_DIR := $(CURDIR)/ndk-modules/sqlcipher
 LICENSE := SQLCIPHER_LICENSE
 ASSETS_DIR := assets
 LATEST_TAG := $(shell git tag | sort -r | head -1)
@@ -20,8 +19,8 @@ init:
 all: build-external build-jni build-java copy-libs
 
 build-external:
-	cd ${EXTERNAL_DIR} && \
-	make -f Android.mk build-local-hack
+	cd ${SQLCIPHER_DIR} && \
+	ndk-build APP_BUILD_SCRIPT=Android.mk build-local-hack
 
 build-jni:
 	cd ${CURDIR} && \
@@ -48,7 +47,7 @@ clean:
 	-rm SQLCipher\ for\ Android\*.zip
 	ant clean
 	cd ${CURDIR} && ndk-build clean
-	-cd ${SQLCIPHER_DIR} && make clean
+	-cd ${SQLCIPHER_DIR}/sqlcipher && make clean
 	-rm ${LIBRARY_ROOT}/sqlcipher.jar
 
 copy-libs:
