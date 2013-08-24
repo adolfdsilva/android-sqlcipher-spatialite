@@ -34,7 +34,7 @@ sqlcipher_files := \
 	sqlcipher/sqlite3.c
 
 sqlcipher_cflags := -DSQLITE_HAS_CODEC -DHAVE_FDATASYNC=0
-sqlite_visibility_cflags :=  \
+#sqlite_visibility_cflags :=  \
 	-DSQLITE_API='__attribute__ ((visibility ("default")))'
 
 include $(CLEAR_VARS)
