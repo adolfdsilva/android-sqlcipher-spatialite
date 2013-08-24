@@ -5,7 +5,8 @@ include ${CLEAR_VARS}
 # start icu project import
 #-------------------------
 
-ICU_COMMON_PATH := $(LOCAL_PATH)/icu4c/common
+ICU_COMMON_PATH := icu4c/common
+ICU_COMMON_FULL_PATH := $(LOCAL_PATH)/icu4c/common
 
 # new icu common build begin
 
@@ -99,8 +100,8 @@ icu_src_files += $(ICU_COMMON_PATH)/../stubdata/stubdata.c
 # new icu common build end
 
 icu_c_includes := \
-        $(ICU_COMMON_PATH) \
-        $(ICU_COMMON_PATH)/../i18n
+        $(ICU_COMMON_FULL_PATH) \
+        $(ICU_COMMON_FULL_PATH)/../i18n
 
 # We make the ICU data directory relative to $ANDROID_ROOT on Android, so both
 # device and sim builds can use the same codepath, and it's hard to break one
@@ -124,7 +125,7 @@ LOCAL_SRC_FILES := $(icu_src_files)
 LOCAL_C_INCLUDES := $(icu_c_includes)
 LOCAL_CFLAGS := $(icu_local_cflags) -DPIC -fPIC
 LOCAL_EXPORT_CFLAGS := $(icu_export_cflags)
-LOCAL_EXPORT_C_INCLUDES := $(ICU_COMMON_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(ICU_COMMON_FULL_PATH)
 LOCAL_CPP_FEATURES := rtti
 LOCAL_MODULE := libicuuc
 include $(BUILD_STATIC_LIBRARY)
@@ -138,8 +139,8 @@ include $(BUILD_STATIC_LIBRARY)
 # start icui18n
 #--------------
 include $(CLEAR_VARS)
-ICU_I18N_PATH := $(LOCAL_PATH)/icu4c/i18n
-#ICU_I18N_PATH := icu4c/i18n
+ICU_I18N_PATH := icu4c/i18n
+ICU_I18N_FULL_PATH := $(LOCAL_PATH)/icu4c/i18n
 
 # start new icu18n
 
@@ -201,7 +202,7 @@ src_files += \
 # end new icu18n
 
 c_includes = \
-        $(ICU_I18N_PATH)
+        $(ICU_I18N_FULL_PATH)
 
 #
 # Build for the target (device).
@@ -213,10 +214,9 @@ LOCAL_SRC_FILES := $(src_files)
 LOCAL_C_INCLUDES := $(c_includes) abi/cpp/include
 LOCAL_CFLAGS += -D_REENTRANT -DPIC -DU_I18N_IMPLEMENTATION -fPIC -fvisibility=hidden
 LOCAL_CFLAGS += -O3
-LOCAL_EXPORT_C_INCLUDES := $(ICU_I18N_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(ICU_I18N_FULL_PATH)
 LOCAL_CPP_FEATURES := rtti
 LOCAL_STATIC_LIBRARIES += libicuuc
 LOCAL_MODULE := libicui18n
 
 include $(BUILD_STATIC_LIBRARY)
-
