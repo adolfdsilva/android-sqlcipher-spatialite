@@ -56,3 +56,6 @@ copy-libs:
 copy-libs-dist:
 	cp ${LIBRARY_ROOT}/*.jar dist/SQLCipherForAndroid-SDK/libs/ && \
 	cp ${LIBRARY_ROOT}/armeabi/*.so dist/SQLCipherForAndroid-SDK/libs/armeabi/
+
+build-openssl-libraries:
+	./build-openssl-libraries.sh

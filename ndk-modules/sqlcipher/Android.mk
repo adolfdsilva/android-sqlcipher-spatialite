@@ -59,8 +59,6 @@ LOCAL_EXPORT_CFLAGS += \
 LOCAL_MODULE    := libsqlcipher
 LOCAL_SRC_FILES := $(sqlcipher_files)
 LOCAL_STATIC_LIBRARIES := libicui18n libicuuc
-#LOCAL_STATIC_LIBRARIES += libcrypto_static
-#LOCAL_SHARED_LIBRARIES := libcrypto
-LOCAL_STATIC_LIBRARIES += libcrypto_prebuilt
+LOCAL_STATIC_LIBRARIES += libcrypto_static
 
 include $(BUILD_STATIC_LIBRARY)

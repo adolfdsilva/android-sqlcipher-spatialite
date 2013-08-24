@@ -22,12 +22,12 @@
 [submodule "ndk-modules/icu4c/icu4c"]
 	path = ndk-modules/icu4c/icu4c
 	url = https://github.com/android/platform_external_icu4c.git
-[submodule "ndk-modules/android-openssl/openssl"]
-	path = ndk-modules/android-openssl/openssl
-	url = https://github.com/guardianproject/openssl-android.git
 [submodule "ndk-modules/libnativehelper/libnativehelper"]
 	path = ndk-modules/libnativehelper/libnativehelper
 	url = https://android.googlesource.com/platform/libnativehelper
 [submodule "ndk-modules/sqlcipher/sqlcipher"]
 	path = ndk-modules/sqlcipher/sqlcipher
 	url = https://github.com/sqlcipher/sqlcipher.git
+[submodule "ndk-modules/android-openssl/openssl"]
+	path = ndk-modules/android-openssl/openssl
+	url = https://android.googlesource.com/platform/external/openssl/
