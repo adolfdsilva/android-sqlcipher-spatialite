@@ -24,7 +24,7 @@ SPATIALITE_SQLITE_CFLAGS := \
 build-local-hack: sqlcipher/sqlite3.c
 
 sqlcipher/sqlite3.c:
-	cd $(CURDIR)/sqlcipher && ./configure CFLAGS="${ANDROID_SQLITE_CFLAGS} ${SPATIALITE_SQLITE_CFLAGS}"
+	cp $(CURDIR)/config/Makefile $(CURDIR)/config/config.h $(CURDIR)/sqlcipher/
 	make -C sqlcipher sqlite3.c
 
 #------------------------------------------------------------------------------#
