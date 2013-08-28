@@ -8,6 +8,7 @@ GEOS_FILES :=  \
 	geos/capi/geos_ts_c.cpp \
 	geos/src/algorithm/Angle.cpp \
 	geos/src/algorithm/BoundaryNodeRule.cpp \
+	geos/src/algorithm/Centroid.cpp \
 	geos/src/algorithm/CentroidArea.cpp \
 	geos/src/algorithm/CentroidLine.cpp \
 	geos/src/algorithm/CentroidPoint.cpp \
@@ -156,6 +157,7 @@ GEOS_FILES :=  \
 	geos/src/noding/BasicSegmentString.cpp \
 	geos/src/noding/FastNodingValidator.cpp \
 	geos/src/noding/FastSegmentSetIntersectionFinder.cpp \
+	geos/src/noding/GeometryNoder.cpp \
 	geos/src/noding/IntersectionAdder.cpp \
 	geos/src/noding/IntersectionFinderAdder.cpp \
 	geos/src/noding/IteratedNoder.cpp \
@@ -258,6 +260,8 @@ GEOS_FILES :=  \
 	geos/src/precision/CommonBitsOp.cpp \
 	geos/src/precision/CommonBitsRemover.cpp \
 	geos/src/precision/EnhancedPrecisionOp.cpp \
+	geos/src/precision/GeometryPrecisionReducer.cpp \
+	geos/src/precision/PrecisionReducerCoordinateOperation.cpp \
 	geos/src/precision/SimpleGeometryPrecisionReducer.cpp \
 	geos/src/simplify/DouglasPeuckerLineSimplifier.cpp \
 	geos/src/simplify/DouglasPeuckerSimplifier.cpp \
@@ -267,8 +271,19 @@ GEOS_FILES :=  \
 	geos/src/simplify/TaggedLineString.cpp \
 	geos/src/simplify/TaggedLineStringSimplifier.cpp \
 	geos/src/simplify/TopologyPreservingSimplifier.cpp \
+	geos/src/triangulate/DelaunayTriangulationBuilder.cpp \
+	geos/src/triangulate/IncrementalDelaunayTriangulator.cpp \
+	geos/src/triangulate/quadedge/LastFoundQuadEdgeLocator.cpp \
+	geos/src/triangulate/quadedge/LocateFailureException.cpp \
+	geos/src/triangulate/quadedge/QuadEdge.cpp \
+	geos/src/triangulate/quadedge/QuadEdgeLocator.cpp \
+	geos/src/triangulate/quadedge/QuadEdgeSubdivision.cpp \
+	geos/src/triangulate/quadedge/TrianglePredicate.cpp \
+	geos/src/triangulate/quadedge/TriangleVisitor.cpp \
+	geos/src/triangulate/quadedge/Vertex.cpp \
 	geos/src/util/Assert.cpp \
 	geos/src/util/GeometricShapeFactory.cpp \
+	geos/src/util/Interrupt.cpp \
 	geos/src/util/math.cpp \
 	geos/src/util/Profiler.cpp
 

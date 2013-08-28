@@ -1,8 +1,7 @@
 /**********************************************************************
- * $Id$
  *
  * GEOS - Geometry Engine Open Source
- * http://geos.refractions.net
+ * http://geos.osgeo.org
  *
  * Copyright (C) 2007 Refractions Research Inc.
  *
@@ -20,15 +19,15 @@
 #endif
 
 #ifndef GEOS_VERSION_MINOR
-#define GEOS_VERSION_MINOR 3
+#define GEOS_VERSION_MINOR 4
 #endif
 
 #ifndef GEOS_VERSION_PATCH
-#define GEOS_VERSION_PATCH 8
+#define GEOS_VERSION_PATCH 2
 #endif
 
 #ifndef GEOS_VERSION
-#define GEOS_VERSION "3.3.8"
+#define GEOS_VERSION "3.4.2"
 #endif
 
 #ifndef GEOS_JTS_PORT
