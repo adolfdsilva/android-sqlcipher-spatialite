@@ -86,9 +86,9 @@ TCC += $(OPTS)
 
 # Version numbers and release number for the SQLite being compiled.
 #
-VERSION = 3.7
-VERSION_NUMBER = 3007017
-RELEASE = 3.7.17
+VERSION = 3.8
+VERSION_NUMBER = 3008000
+RELEASE = 3.8.0.1
 
 # Filename extensions
 #
@@ -413,6 +413,7 @@ TESTSRC += \
   $(TOP)/ext/misc/fuzzer.c \
   $(TOP)/ext/misc/ieee754.c \
   $(TOP)/ext/misc/nextchar.c \
+  $(TOP)/ext/misc/percentile.c \
   $(TOP)/ext/misc/regexp.c \
   $(TOP)/ext/misc/spellfix.c \
   $(TOP)/ext/misc/wholenumber.c

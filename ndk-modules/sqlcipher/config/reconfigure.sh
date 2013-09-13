@@ -4,7 +4,7 @@ set -e
 
 : ${ANDROID_TOOLCHAIN_DIR:=/tmp/sqlcipher-android-toolchain}
 
-export PATH=${ANDROID_TOOLCHAIN_DIR}:$PATH
+export PATH=${ANDROID_TOOLCHAIN_DIR}/bin:$PATH
 export CC=arm-linux-androideabi-gcc
 export CXX=arm-linux-androideabi-g++
 

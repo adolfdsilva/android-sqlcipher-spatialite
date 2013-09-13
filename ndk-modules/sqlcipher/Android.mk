@@ -3,6 +3,7 @@
 #	ndk-build build-local-hack
 #   ndk-build
 
+
 LOCAL_PATH := $(call my-dir)
 
 # NOTE the following flags,
@@ -23,6 +24,7 @@ SPATIALITE_SQLITE_CFLAGS := \
 # how on earth to you make this damn Android build system run cmd line progs?!?!
 build-local-hack: sqlcipher/sqlite3.c
 
+.PHONY: sqlcipher/sqlite3.c
 sqlcipher/sqlite3.c:
 	cp $(CURDIR)/config/Makefile $(CURDIR)/config/config.h $(CURDIR)/sqlcipher/
 	make -C sqlcipher sqlite3.c

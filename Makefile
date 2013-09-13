@@ -47,7 +47,7 @@ clean:
 	-rm SQLCipher\ for\ Android\*.zip
 	ant clean
 	cd ${CURDIR} && ndk-build clean
-	-cd ${SQLCIPHER_DIR}/sqlcipher && make clean
+	-cd ${SQLCIPHER_DIR}/sqlcipher && make distclean && rm config.h
 	-rm ${LIBRARY_ROOT}/sqlcipher.jar
 
 copy-libs:

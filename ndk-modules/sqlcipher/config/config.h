@@ -96,13 +96,13 @@
 #define PACKAGE_NAME "sqlcipher"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "sqlcipher 3.7.17"
+#define PACKAGE_STRING "sqlcipher 3.8.0.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "sqlcipher"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.7.17"
+#define PACKAGE_VERSION "3.8.0.1"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
