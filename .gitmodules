@@ -3,13 +3,13 @@
 	url = https://github.com/guardianproject/notepadbot.git
 [submodule "ndk-modules/proj.4/proj.4"]
 	path = ndk-modules/proj.4/proj.4
-	url = git://github.com/littlesavage/proj.4.git
+	url = https://github.com/illarionov/proj.4.git
 [submodule "ndk-modules/geos/geos"]
 	path = ndk-modules/geos/geos
-	url = git://github.com/libgeos/libgeos.git
+	url = https://github.com/libgeos/libgeos.git
 [submodule "ndk-modules/libspatialite/libspatialite"]
 	path = ndk-modules/libspatialite/libspatialite
-	url = git@github.com:littlesavage/SpatiaLite.git
+	url = https://github.com/illarionov/SpatiaLite.git
 [submodule "ndk-modules/android-sqlite/android-sqlite"]
 	path = ndk-modules/android-sqlite/android-sqlite
 	url = https://github.com/android/platform_external_sqlite.git
