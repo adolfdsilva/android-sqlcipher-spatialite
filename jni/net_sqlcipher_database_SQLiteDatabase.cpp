@@ -41,6 +41,8 @@
 #include <unicode/ucnv.h>
 #include <unicode/ucnv_err.h>
 
+#include <private/utils/Static.h>
+
 #include "sqlite3_exception.h"
 #include "sqlcipher_loading.h"
 
@@ -621,7 +623,10 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved)
 	register_android_database_CursorWindow(env);
 
 	//register_android_database_SQLiteDebug(env);
-	
+
+    android::initialize_string8();
+    android::initialize_string16();
+
 return JNI_VERSION_1_2;
 
 } 
