@@ -15,7 +15,7 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/include \
 
 LOCAL_STATIC_LIBRARIES := \
-    libicuuc \
+    libicuuc_static \
     libsqlcipher_android \
     libnativehelper_static \
     libspatialite

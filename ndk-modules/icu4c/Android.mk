@@ -1,5 +1,24 @@
+# Copyright (C) 2008 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 LOCAL_PATH := $(call my-dir)
-include ${CLEAR_VARS}
+
+icu_packaging_cflags := \
+	-DU_STATIC_IMPLEMENTATION \
+	-DUCONFIG_NO_LEGACY_CONVERSION \
+	-DUCONFIG_NO_FORMATTING \
+	-DUCONFIG_NO_TRANSLITERATION
 
 #-------------------------
 # start icu project import
@@ -10,125 +29,138 @@ ICU_COMMON_FULL_PATH := $(LOCAL_PATH)/icu4c/common
 
 # new icu common build begin
 
-icu_src_files := \
-        $(ICU_COMMON_PATH)/cmemory.c          $(ICU_COMMON_PATH)/cstring.c          \
-        $(ICU_COMMON_PATH)/cwchar.c           $(ICU_COMMON_PATH)/locmap.c           \
-        $(ICU_COMMON_PATH)/punycode.c         $(ICU_COMMON_PATH)/putil.c            \
-        $(ICU_COMMON_PATH)/uarrsort.c         $(ICU_COMMON_PATH)/ubidi.c            \
-        $(ICU_COMMON_PATH)/ubidiln.c          $(ICU_COMMON_PATH)/ubidi_props.c      \
-        $(ICU_COMMON_PATH)/ubidiwrt.c         $(ICU_COMMON_PATH)/ucase.c            \
-        $(ICU_COMMON_PATH)/ucasemap.c         $(ICU_COMMON_PATH)/ucat.c             \
-        $(ICU_COMMON_PATH)/uchar.c            $(ICU_COMMON_PATH)/ucln_cmn.c         \
-        $(ICU_COMMON_PATH)/ucmndata.c                            \
-        $(ICU_COMMON_PATH)/ucnv2022.c         $(ICU_COMMON_PATH)/ucnv_bld.c         \
-        $(ICU_COMMON_PATH)/ucnvbocu.c         $(ICU_COMMON_PATH)/ucnv.c             \
-        $(ICU_COMMON_PATH)/ucnv_cb.c          $(ICU_COMMON_PATH)/ucnv_cnv.c         \
-        $(ICU_COMMON_PATH)/ucnvdisp.c         $(ICU_COMMON_PATH)/ucnv_err.c         \
-        $(ICU_COMMON_PATH)/ucnv_ext.c         $(ICU_COMMON_PATH)/ucnvhz.c           \
-        $(ICU_COMMON_PATH)/ucnv_io.c          $(ICU_COMMON_PATH)/ucnvisci.c         \
-        $(ICU_COMMON_PATH)/ucnvlat1.c         $(ICU_COMMON_PATH)/ucnv_lmb.c         \
-        $(ICU_COMMON_PATH)/ucnvmbcs.c         $(ICU_COMMON_PATH)/ucnvscsu.c         \
-        $(ICU_COMMON_PATH)/ucnv_set.c         $(ICU_COMMON_PATH)/ucnv_u16.c         \
-        $(ICU_COMMON_PATH)/ucnv_u32.c         $(ICU_COMMON_PATH)/ucnv_u7.c          \
-        $(ICU_COMMON_PATH)/ucnv_u8.c                             \
-        $(ICU_COMMON_PATH)/udatamem.c         \
-        $(ICU_COMMON_PATH)/udataswp.c         $(ICU_COMMON_PATH)/uenum.c            \
-        $(ICU_COMMON_PATH)/uhash.c            $(ICU_COMMON_PATH)/uinit.c            \
-        $(ICU_COMMON_PATH)/uinvchar.c         $(ICU_COMMON_PATH)/uloc.c             \
-        $(ICU_COMMON_PATH)/umapfile.c         $(ICU_COMMON_PATH)/umath.c            \
-        $(ICU_COMMON_PATH)/umutex.c           $(ICU_COMMON_PATH)/unames.c           \
-        $(ICU_COMMON_PATH)/unorm_it.c         $(ICU_COMMON_PATH)/uresbund.c         \
-        $(ICU_COMMON_PATH)/ures_cnv.c         $(ICU_COMMON_PATH)/uresdata.c         \
-        $(ICU_COMMON_PATH)/usc_impl.c         $(ICU_COMMON_PATH)/uscript.c          \
-        $(ICU_COMMON_PATH)/ushape.c           $(ICU_COMMON_PATH)/ustrcase.c         \
-        $(ICU_COMMON_PATH)/ustr_cnv.c         $(ICU_COMMON_PATH)/ustrfmt.c          \
-        $(ICU_COMMON_PATH)/ustring.c          $(ICU_COMMON_PATH)/ustrtrns.c         \
-        $(ICU_COMMON_PATH)/ustr_wcs.c         $(ICU_COMMON_PATH)/utf_impl.c         \
-        $(ICU_COMMON_PATH)/utrace.c           $(ICU_COMMON_PATH)/utrie.c            \
-        $(ICU_COMMON_PATH)/utypes.c           $(ICU_COMMON_PATH)/wintz.c            \
-        $(ICU_COMMON_PATH)/utrie2_builder.c   $(ICU_COMMON_PATH)/icuplug.c          \
-        $(ICU_COMMON_PATH)/propsvec.c         $(ICU_COMMON_PATH)/ulist.c            \
-        $(ICU_COMMON_PATH)/uloc_tag.c
+icu_common_src_files := \
+    cmemory.c          cstring.c          \
+    cwchar.c           locmap.c           \
+    punycode.cpp       putil.cpp          \
+    uarrsort.c         ubidi.c            \
+    ubidiln.c          ubidi_props.c      \
+    ubidiwrt.c         ucase.cpp          \
+    ucasemap.cpp       ucat.c             \
+    uchar.c            ucln_cmn.c         \
+    ucmndata.c                            \
+    ucnv2022.cpp       ucnv_bld.cpp       \
+    ucnvbocu.cpp       ucnv.c             \
+    ucnv_cb.c          ucnv_cnv.c         \
+    ucnvdisp.c         ucnv_err.c         \
+    ucnv_ext.cpp       ucnvhz.c           \
+    ucnv_io.cpp        ucnvisci.c         \
+    ucnvlat1.c         ucnv_lmb.c         \
+    ucnvmbcs.c         ucnvscsu.c         \
+    ucnv_set.c         ucnv_u16.c         \
+    ucnv_u32.c         ucnv_u7.c          \
+    ucnv_u8.c                             \
+    udatamem.c         \
+    udataswp.c         uenum.c            \
+    uhash.c            uinit.c            \
+    uinvchar.c         uloc.cpp           \
+    umapfile.c         umath.c            \
+    umutex.cpp         unames.cpp         \
+    unorm_it.c         uresbund.cpp       \
+    ures_cnv.c         uresdata.c         \
+    usc_impl.c         uscript.c          \
+    uscript_props.cpp  \
+    ushape.cpp         ustrcase.cpp       \
+    ustr_cnv.c         ustrfmt.c          \
+    ustring.cpp        ustrtrns.cpp       \
+    ustr_wcs.cpp       utf_impl.c         \
+    utrace.c           utrie.cpp          \
+    utypes.c           wintz.c            \
+    utrie2_builder.cpp icuplug.c          \
+    propsvec.c         ulist.c            \
+    uloc_tag.c         ucnv_ct.c
 
-icu_src_files += \
-  $(ICU_COMMON_PATH)/bmpset.cpp      $(ICU_COMMON_PATH)/unisetspan.cpp   \
-        $(ICU_COMMON_PATH)/brkeng.cpp      $(ICU_COMMON_PATH)/brkiter.cpp      \
-        $(ICU_COMMON_PATH)/caniter.cpp     $(ICU_COMMON_PATH)/chariter.cpp     \
-        $(ICU_COMMON_PATH)/dictbe.cpp      $(ICU_COMMON_PATH)/locbased.cpp     \
-        $(ICU_COMMON_PATH)/locid.cpp       $(ICU_COMMON_PATH)/locutil.cpp      \
-        $(ICU_COMMON_PATH)/normlzr.cpp     $(ICU_COMMON_PATH)/parsepos.cpp     \
-        $(ICU_COMMON_PATH)/propname.cpp    $(ICU_COMMON_PATH)/rbbi.cpp         \
-        $(ICU_COMMON_PATH)/rbbidata.cpp    $(ICU_COMMON_PATH)/rbbinode.cpp     \
-        $(ICU_COMMON_PATH)/rbbirb.cpp      $(ICU_COMMON_PATH)/rbbiscan.cpp     \
-        $(ICU_COMMON_PATH)/rbbisetb.cpp    $(ICU_COMMON_PATH)/rbbistbl.cpp     \
-        $(ICU_COMMON_PATH)/rbbitblb.cpp    $(ICU_COMMON_PATH)/resbund_cnv.cpp  \
-        $(ICU_COMMON_PATH)/resbund.cpp     $(ICU_COMMON_PATH)/ruleiter.cpp     \
-        $(ICU_COMMON_PATH)/schriter.cpp    $(ICU_COMMON_PATH)/serv.cpp         \
-        $(ICU_COMMON_PATH)/servlk.cpp      $(ICU_COMMON_PATH)/servlkf.cpp      \
-        $(ICU_COMMON_PATH)/servls.cpp      $(ICU_COMMON_PATH)/servnotf.cpp     \
-        $(ICU_COMMON_PATH)/servrbf.cpp     $(ICU_COMMON_PATH)/servslkf.cpp     \
-        $(ICU_COMMON_PATH)/triedict.cpp    $(ICU_COMMON_PATH)/ubrk.cpp         \
-        $(ICU_COMMON_PATH)/uchriter.cpp    $(ICU_COMMON_PATH)/uhash_us.cpp     \
-        $(ICU_COMMON_PATH)/uidna.cpp       $(ICU_COMMON_PATH)/uiter.cpp        \
-        $(ICU_COMMON_PATH)/unifilt.cpp     $(ICU_COMMON_PATH)/unifunct.cpp     \
-        $(ICU_COMMON_PATH)/uniset.cpp      $(ICU_COMMON_PATH)/uniset_props.cpp \
-        $(ICU_COMMON_PATH)/unistr_case.cpp $(ICU_COMMON_PATH)/unistr_cnv.cpp   \
-        $(ICU_COMMON_PATH)/unistr.cpp      $(ICU_COMMON_PATH)/unistr_props.cpp \
-        $(ICU_COMMON_PATH)/unormcmp.cpp    $(ICU_COMMON_PATH)/unorm.cpp        \
-        $(ICU_COMMON_PATH)/uobject.cpp     $(ICU_COMMON_PATH)/uset.cpp         \
-        $(ICU_COMMON_PATH)/usetiter.cpp    $(ICU_COMMON_PATH)/uset_props.cpp   \
-        $(ICU_COMMON_PATH)/usprep.cpp      $(ICU_COMMON_PATH)/ustack.cpp       \
-        $(ICU_COMMON_PATH)/ustrenum.cpp    $(ICU_COMMON_PATH)/utext.cpp        \
-        $(ICU_COMMON_PATH)/util.cpp        $(ICU_COMMON_PATH)/util_props.cpp   \
-        $(ICU_COMMON_PATH)/uvector.cpp     $(ICU_COMMON_PATH)/uvectr32.cpp     \
-        $(ICU_COMMON_PATH)/errorcode.cpp                    \
-        $(ICU_COMMON_PATH)/bytestream.cpp  $(ICU_COMMON_PATH)/stringpiece.cpp  \
-        $(ICU_COMMON_PATH)/mutex.cpp       $(ICU_COMMON_PATH)/dtintrv.cpp      \
-        $(ICU_COMMON_PATH)/ucnvsel.cpp     $(ICU_COMMON_PATH)/uvectr64.cpp     \
-        $(ICU_COMMON_PATH)/locavailable.cpp         $(ICU_COMMON_PATH)/locdispnames.cpp   \
-        $(ICU_COMMON_PATH)/loclikely.cpp            $(ICU_COMMON_PATH)/locresdata.cpp     \
-        $(ICU_COMMON_PATH)/normalizer2impl.cpp      $(ICU_COMMON_PATH)/normalizer2.cpp    \
-        $(ICU_COMMON_PATH)/filterednormalizer2.cpp  $(ICU_COMMON_PATH)/ucol_swp.cpp       \
-        $(ICU_COMMON_PATH)/uprops.cpp      $(ICU_COMMON_PATH)/utrie2.cpp \
-  $(ICU_COMMON_PATH)/charstr.cpp     $(ICU_COMMON_PATH)/uts46.cpp \
-  $(ICU_COMMON_PATH)/udata.cpp
+icu_common_src_files += \
+        bmpset.cpp      unisetspan.cpp   \
+    brkeng.cpp      brkiter.cpp      \
+    caniter.cpp     chariter.cpp     \
+    dictbe.cpp  locbased.cpp     \
+    locid.cpp       locutil.cpp      \
+    normlzr.cpp     parsepos.cpp     \
+    propname.cpp    rbbi.cpp         \
+    rbbidata.cpp    rbbinode.cpp     \
+    rbbirb.cpp      rbbiscan.cpp     \
+    rbbisetb.cpp    rbbistbl.cpp     \
+    rbbitblb.cpp    resbund_cnv.cpp  \
+    resbund.cpp     ruleiter.cpp     \
+    schriter.cpp    serv.cpp         \
+    servlk.cpp      servlkf.cpp      \
+    servls.cpp      servnotf.cpp     \
+    servrbf.cpp     servslkf.cpp     \
+    ubrk.cpp         \
+    uchriter.cpp    uhash_us.cpp     \
+    uidna.cpp       uiter.cpp        \
+    unifilt.cpp     unifunct.cpp     \
+    uniset.cpp      uniset_props.cpp \
+    unistr_case.cpp unistr_cnv.cpp   \
+    unistr.cpp      unistr_props.cpp \
+    unormcmp.cpp    unorm.cpp        \
+    uobject.cpp     uset.cpp         \
+    usetiter.cpp    uset_props.cpp   \
+    usprep.cpp      ustack.cpp       \
+    ustrenum.cpp    utext.cpp        \
+    util.cpp        util_props.cpp   \
+    uvector.cpp     uvectr32.cpp     \
+    errorcode.cpp                    \
+    bytestream.cpp  stringpiece.cpp  \
+    mutex.cpp       dtintrv.cpp      \
+    ucnvsel.cpp     uvectr64.cpp     \
+    locavailable.cpp         locdispnames.cpp   \
+    loclikely.cpp            locresdata.cpp     \
+    normalizer2impl.cpp      normalizer2.cpp    \
+    filterednormalizer2.cpp  ucol_swp.cpp       \
+    uprops.cpp      utrie2.cpp \
+        charstr.cpp     uts46.cpp \
+        udata.cpp   appendable.cpp  bytestrie.cpp \
+        bytestriebuilder.cpp  bytestrieiterator.cpp \
+        messagepattern.cpp patternprops.cpp stringtriebuilder.cpp \
+        ucharstrie.cpp ucharstriebuilder.cpp ucharstrieiterator.cpp \
+    dictionarydata.cpp \
+    ustrcase_locale.cpp unistr_titlecase_brkiter.cpp \
+    uniset_closure.cpp ucasemap_titlecase_brkiter.cpp \
+    ustr_titlecase_brkiter.cpp unistr_case_locale.cpp
 
 # This is the empty compiled-in icu data structure
 # that we need to satisfy the linker.
-icu_src_files += $(ICU_COMMON_PATH)/../stubdata/stubdata.c
+icu_common_src_files += ../stubdata/stubdata.c
 
 # new icu common build end
 
-icu_c_includes := \
+icu_common_c_includes := \
         $(ICU_COMMON_FULL_PATH) \
         $(ICU_COMMON_FULL_PATH)/../i18n
 
 # We make the ICU data directory relative to $ANDROID_ROOT on Android, so both
 # device and sim builds can use the same codepath, and it's hard to break one
 # without noticing because the other still works.
+icu_common_local_cflags := '-DICU_DATA_DIR_PREFIX_ENV_VAR="SQLCIPHER_ICU_PREFIX"'
+icu_common_local_cflags += '-DICU_DATA_DIR="/icu"'
 
-icu_local_cflags += -D_REENTRANT -O3 -DU_COMMON_IMPLEMENTATION -fvisibility=hidden 
-icu_local_cflags += -DHAVE_ANDROID_OS=1
-icu_local_cflags += '-DICU_DATA_DIR_PREFIX_ENV_VAR="SQLCIPHER_ICU_PREFIX"'
-icu_local_cflags += '-DICU_DATA_DIR="/icu"'
-icu_local_cflags += -include $(LOCAL_PATH)/VisibilityIcu.h
+# bionic doesn't have <langinfo.h>.
+icu_common_local_cflags += -DU_HAVE_NL_LANGINFO_CODESET=0
+# bionic has timezone instead of __timezone.
+icu_common_local_cflags += -DU_TIMEZONE=timezone
 
-icu_export_cflags := -DHAVE_ANDROID_OS=1 \
-	-include $(LOCAL_PATH)/VisibilityIcu.h
+icu_common_local_cflags += -D_REENTRANT
+icu_common_local_cflags += -DU_COMMON_IMPLEMENTATION
+
+icu_common_local_cflags += -O3 -fvisibility=hidden
 
 #
-# Build for the target (device).
+# Build  as a static library
 #
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := $(icu_src_files)
-LOCAL_C_INCLUDES := $(icu_c_includes)
-LOCAL_CFLAGS := $(icu_local_cflags) -DPIC -fPIC
-LOCAL_EXPORT_CFLAGS := $(icu_export_cflags)
+LOCAL_C_INCLUDES += $(icu_common_c_includes)
 LOCAL_EXPORT_C_INCLUDES := $(ICU_COMMON_FULL_PATH)
 LOCAL_CPP_FEATURES := rtti
-LOCAL_MODULE := libicuuc
+LOCAL_CFLAGS += $(icu_common_local_cflags) $(icu_packaging_cflags) -DPIC -fPIC
+# Using -Os over -O3 actually cuts down the final executable size by a few dozen kilobytes
+LOCAL_CFLAGS += -Os
+LOCAL_MODULE := libicuuc_static
+LOCAL_SRC_FILES += $(addprefix $(ICU_COMMON_PATH)/, $(icu_common_src_files))
 include $(BUILD_STATIC_LIBRARY)
+
 
 #----------
 # end icuuc
@@ -144,79 +176,92 @@ ICU_I18N_FULL_PATH := $(LOCAL_PATH)/icu4c/i18n
 
 # start new icu18n
 
-src_files := \
-        $(ICU_I18N_PATH)/bocsu.c     $(ICU_I18N_PATH)/ucln_in.c  $(ICU_I18N_PATH)/decContext.c \
-        $(ICU_I18N_PATH)/ulocdata.c  $(ICU_I18N_PATH)/utmscale.c $(ICU_I18N_PATH)/decNumber.c
+icu_i18n_src_files := \
+    ucln_in.c  decContext.c \
+    ulocdata.c  utmscale.c decNumber.c
 
-src_files += \
-  $(ICU_I18N_PATH)/indiancal.cpp   $(ICU_I18N_PATH)/dtptngen.cpp $(ICU_I18N_PATH)/dtrule.cpp   \
-  $(ICU_I18N_PATH)/persncal.cpp    $(ICU_I18N_PATH)/rbtz.cpp     $(ICU_I18N_PATH)/reldtfmt.cpp \
-  $(ICU_I18N_PATH)/taiwncal.cpp    $(ICU_I18N_PATH)/tzrule.cpp   $(ICU_I18N_PATH)/tztrans.cpp  \
-  $(ICU_I18N_PATH)/udatpg.cpp      $(ICU_I18N_PATH)/vtzone.cpp                \
-        $(ICU_I18N_PATH)/anytrans.cpp    $(ICU_I18N_PATH)/astro.cpp    $(ICU_I18N_PATH)/buddhcal.cpp \
-        $(ICU_I18N_PATH)/basictz.cpp     $(ICU_I18N_PATH)/calendar.cpp $(ICU_I18N_PATH)/casetrn.cpp  \
-        $(ICU_I18N_PATH)/choicfmt.cpp    $(ICU_I18N_PATH)/coleitr.cpp  $(ICU_I18N_PATH)/coll.cpp     \
-        $(ICU_I18N_PATH)/cpdtrans.cpp    $(ICU_I18N_PATH)/csdetect.cpp $(ICU_I18N_PATH)/csmatch.cpp  \
-        $(ICU_I18N_PATH)/csr2022.cpp     $(ICU_I18N_PATH)/csrecog.cpp  $(ICU_I18N_PATH)/csrmbcs.cpp  \
-        $(ICU_I18N_PATH)/csrsbcs.cpp     $(ICU_I18N_PATH)/csrucode.cpp $(ICU_I18N_PATH)/csrutf8.cpp  \
-        $(ICU_I18N_PATH)/curramt.cpp     $(ICU_I18N_PATH)/currfmt.cpp  $(ICU_I18N_PATH)/currunit.cpp \
-        $(ICU_I18N_PATH)/datefmt.cpp     $(ICU_I18N_PATH)/dcfmtsym.cpp $(ICU_I18N_PATH)/decimfmt.cpp \
-        $(ICU_I18N_PATH)/digitlst.cpp    $(ICU_I18N_PATH)/dtfmtsym.cpp $(ICU_I18N_PATH)/esctrn.cpp   \
-        $(ICU_I18N_PATH)/fmtable_cnv.cpp $(ICU_I18N_PATH)/fmtable.cpp  $(ICU_I18N_PATH)/format.cpp   \
-        $(ICU_I18N_PATH)/funcrepl.cpp    $(ICU_I18N_PATH)/gregocal.cpp $(ICU_I18N_PATH)/gregoimp.cpp \
-        $(ICU_I18N_PATH)/hebrwcal.cpp    $(ICU_I18N_PATH)/inputext.cpp $(ICU_I18N_PATH)/islamcal.cpp \
-        $(ICU_I18N_PATH)/japancal.cpp    $(ICU_I18N_PATH)/measfmt.cpp  $(ICU_I18N_PATH)/measure.cpp  \
-        $(ICU_I18N_PATH)/msgfmt.cpp      $(ICU_I18N_PATH)/name2uni.cpp $(ICU_I18N_PATH)/nfrs.cpp     \
-        $(ICU_I18N_PATH)/nfrule.cpp      $(ICU_I18N_PATH)/nfsubs.cpp   $(ICU_I18N_PATH)/nortrans.cpp \
-        $(ICU_I18N_PATH)/nultrans.cpp    $(ICU_I18N_PATH)/numfmt.cpp   $(ICU_I18N_PATH)/olsontz.cpp  \
-        $(ICU_I18N_PATH)/quant.cpp       $(ICU_I18N_PATH)/rbnf.cpp     $(ICU_I18N_PATH)/rbt.cpp      \
-        $(ICU_I18N_PATH)/rbt_data.cpp    $(ICU_I18N_PATH)/rbt_pars.cpp $(ICU_I18N_PATH)/rbt_rule.cpp \
-        $(ICU_I18N_PATH)/rbt_set.cpp     $(ICU_I18N_PATH)/regexcmp.cpp $(ICU_I18N_PATH)/regexst.cpp  \
-        $(ICU_I18N_PATH)/rematch.cpp     $(ICU_I18N_PATH)/remtrans.cpp $(ICU_I18N_PATH)/repattrn.cpp \
-        $(ICU_I18N_PATH)/search.cpp      $(ICU_I18N_PATH)/simpletz.cpp $(ICU_I18N_PATH)/smpdtfmt.cpp \
-        $(ICU_I18N_PATH)/sortkey.cpp     $(ICU_I18N_PATH)/strmatch.cpp $(ICU_I18N_PATH)/strrepl.cpp  \
-        $(ICU_I18N_PATH)/stsearch.cpp    $(ICU_I18N_PATH)/tblcoll.cpp  $(ICU_I18N_PATH)/timezone.cpp \
-        $(ICU_I18N_PATH)/titletrn.cpp    $(ICU_I18N_PATH)/tolowtrn.cpp $(ICU_I18N_PATH)/toupptrn.cpp \
-        $(ICU_I18N_PATH)/translit.cpp    $(ICU_I18N_PATH)/transreg.cpp $(ICU_I18N_PATH)/tridpars.cpp \
-        $(ICU_I18N_PATH)/ucal.cpp        $(ICU_I18N_PATH)/ucol_bld.cpp $(ICU_I18N_PATH)/ucol_cnt.cpp \
-        $(ICU_I18N_PATH)/ucol.cpp        $(ICU_I18N_PATH)/ucoleitr.cpp $(ICU_I18N_PATH)/ucol_elm.cpp \
-        $(ICU_I18N_PATH)/ucol_res.cpp    $(ICU_I18N_PATH)/ucol_sit.cpp $(ICU_I18N_PATH)/ucol_tok.cpp \
-        $(ICU_I18N_PATH)/ucsdet.cpp      $(ICU_I18N_PATH)/ucurr.cpp    $(ICU_I18N_PATH)/udat.cpp     \
-        $(ICU_I18N_PATH)/umsg.cpp        $(ICU_I18N_PATH)/unesctrn.cpp $(ICU_I18N_PATH)/uni2name.cpp \
-        $(ICU_I18N_PATH)/unum.cpp        $(ICU_I18N_PATH)/uregexc.cpp  $(ICU_I18N_PATH)/uregex.cpp   \
-        $(ICU_I18N_PATH)/usearch.cpp     $(ICU_I18N_PATH)/utrans.cpp   $(ICU_I18N_PATH)/windtfmt.cpp \
-        $(ICU_I18N_PATH)/winnmfmt.cpp    $(ICU_I18N_PATH)/zonemeta.cpp $(ICU_I18N_PATH)/zstrfmt.cpp  \
-        $(ICU_I18N_PATH)/numsys.cpp      $(ICU_I18N_PATH)/chnsecal.cpp \
-        $(ICU_I18N_PATH)/cecal.cpp       $(ICU_I18N_PATH)/coptccal.cpp $(ICU_I18N_PATH)/ethpccal.cpp \
-        $(ICU_I18N_PATH)/brktrans.cpp    $(ICU_I18N_PATH)/wintzimpl.cpp $(ICU_I18N_PATH)/plurrule.cpp \
-        $(ICU_I18N_PATH)/plurfmt.cpp     $(ICU_I18N_PATH)/dtitvfmt.cpp $(ICU_I18N_PATH)/dtitvinf.cpp \
-        $(ICU_I18N_PATH)/tmunit.cpp      $(ICU_I18N_PATH)/tmutamt.cpp  $(ICU_I18N_PATH)/tmutfmt.cpp  \
-        $(ICU_I18N_PATH)/colldata.cpp    $(ICU_I18N_PATH)/bmsearch.cpp $(ICU_I18N_PATH)/bms.cpp      \
-  $(ICU_I18N_PATH)/currpinf.cpp    $(ICU_I18N_PATH)/uspoof.cpp   $(ICU_I18N_PATH)/uspoof_impl.cpp \
-  $(ICU_I18N_PATH)/uspoof_build.cpp     \
-  $(ICU_I18N_PATH)/regextxt.cpp    $(ICU_I18N_PATH)/selfmt.cpp   $(ICU_I18N_PATH)/uspoof_conf.cpp \
-  $(ICU_I18N_PATH)/uspoof_wsconf.cpp $(ICU_I18N_PATH)/ztrans.cpp $(ICU_I18N_PATH)/zrule.cpp  \
-  $(ICU_I18N_PATH)/vzone.cpp       $(ICU_I18N_PATH)/fphdlimp.cpp $(ICU_I18N_PATH)/fpositer.cpp\
-  $(ICU_I18N_PATH)/locdspnm.cpp    $(ICU_I18N_PATH)/decnumstr.cpp $(ICU_I18N_PATH)/ucol_wgt.cpp
+icu_i18n_src_files += \
+        indiancal.cpp   dtptngen.cpp dtrule.cpp   \
+        persncal.cpp    rbtz.cpp     reldtfmt.cpp \
+        taiwncal.cpp    tzrule.cpp   tztrans.cpp  \
+        udatpg.cpp      vtzone.cpp                \
+    anytrans.cpp    astro.cpp    buddhcal.cpp \
+    basictz.cpp     calendar.cpp casetrn.cpp  \
+    choicfmt.cpp    coleitr.cpp  coll.cpp     \
+    compactdecimalformat.cpp \
+    cpdtrans.cpp    csdetect.cpp csmatch.cpp  \
+    csr2022.cpp     csrecog.cpp  csrmbcs.cpp  \
+    csrsbcs.cpp     csrucode.cpp csrutf8.cpp  \
+    curramt.cpp     currfmt.cpp  currunit.cpp \
+    dangical.cpp \
+    datefmt.cpp     dcfmtsym.cpp decimfmt.cpp \
+    digitlst.cpp    dtfmtsym.cpp esctrn.cpp   \
+    fmtable_cnv.cpp fmtable.cpp  format.cpp   \
+    funcrepl.cpp    gender.cpp \
+    gregocal.cpp gregoimp.cpp \
+    hebrwcal.cpp    identifier_info.cpp \
+    inputext.cpp islamcal.cpp \
+    japancal.cpp    measfmt.cpp  measure.cpp  \
+    msgfmt.cpp      name2uni.cpp nfrs.cpp     \
+    nfrule.cpp      nfsubs.cpp   nortrans.cpp \
+    nultrans.cpp    numfmt.cpp   olsontz.cpp  \
+    quant.cpp       rbnf.cpp     rbt.cpp      \
+    rbt_data.cpp    rbt_pars.cpp rbt_rule.cpp \
+    rbt_set.cpp     regexcmp.cpp regexst.cpp  \
+    regeximp.cpp    region.cpp \
+    rematch.cpp     remtrans.cpp repattrn.cpp \
+    scriptset.cpp \
+    search.cpp      simpletz.cpp smpdtfmt.cpp \
+    sortkey.cpp     strmatch.cpp strrepl.cpp  \
+    stsearch.cpp    tblcoll.cpp  timezone.cpp \
+    titletrn.cpp    tolowtrn.cpp toupptrn.cpp \
+    translit.cpp    transreg.cpp tridpars.cpp \
+    ucal.cpp        ucol_bld.cpp ucol_cnt.cpp \
+    ucol.cpp        ucoleitr.cpp ucol_elm.cpp \
+    ucol_res.cpp    ucol_sit.cpp ucol_tok.cpp \
+    ucsdet.cpp      ucurr.cpp    udat.cpp     \
+    umsg.cpp        unesctrn.cpp uni2name.cpp \
+    unum.cpp        uregexc.cpp  uregex.cpp   \
+    usearch.cpp     utrans.cpp   windtfmt.cpp \
+    winnmfmt.cpp    zonemeta.cpp \
+    numsys.cpp      chnsecal.cpp \
+    cecal.cpp       coptccal.cpp ethpccal.cpp \
+    brktrans.cpp    wintzimpl.cpp plurrule.cpp \
+    plurfmt.cpp     dtitvfmt.cpp dtitvinf.cpp \
+    tmunit.cpp      tmutamt.cpp  tmutfmt.cpp  \
+        currpinf.cpp    uspoof.cpp   uspoof_impl.cpp \
+        uspoof_build.cpp     \
+        regextxt.cpp    selfmt.cpp   uspoof_conf.cpp \
+        uspoof_wsconf.cpp ztrans.cpp zrule.cpp  \
+        vzone.cpp       fphdlimp.cpp fpositer.cpp\
+        locdspnm.cpp    ucol_wgt.cpp \
+        alphaindex.cpp  bocsu.cpp    decfmtst.cpp \
+        smpdtfst.cpp    smpdtfst.h   tzfmt.cpp \
+        tzgnames.cpp    tznames.cpp  tznames_impl.cpp \
+        udateintervalformat.cpp  upluralrules.cpp
 
 # end new icu18n
 
-c_includes = \
-        $(ICU_I18N_FULL_PATH)
+icu_i18n_c_includes = \
+        $(ICU_I18N_FULL_PATH) \
+        $(ICU_I18N_FULL_PATH)/../common
+
+icu_i18n_local_cflags := -D_REENTRANT
+icu_i18n_local_cflags += -DU_I18N_IMPLEMENTATION
+icu_i18n_local_cflags += -O3 -fvisibility=hidden
 
 #
-# Build for the target (device).
+# Build as a static library
 #
 
 include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := $(src_files)
-LOCAL_C_INCLUDES := $(c_includes) abi/cpp/include
-LOCAL_CFLAGS += -D_REENTRANT -DPIC -DU_I18N_IMPLEMENTATION -fPIC -fvisibility=hidden
-LOCAL_CFLAGS += -O3
+LOCAL_SRC_FILES += $(addprefix $(ICU_I18N_PATH)/, $(icu_i18n_src_files))
+LOCAL_C_INCLUDES += $(icu_i18n_c_includes)
+LOCAL_STATIC_LIBRARIES += libicuuc_static
 LOCAL_EXPORT_C_INCLUDES := $(ICU_I18N_FULL_PATH)
 LOCAL_CPP_FEATURES := rtti
-LOCAL_STATIC_LIBRARIES += libicuuc
-LOCAL_MODULE := libicui18n
-
+LOCAL_CFLAGS += $(icu_i18n_local_cflags) $(icu_packaging_cflags) -DPIC -fPIC
+# Using -Os over -O3 actually cuts down the final executable size by a few dozen kilobytes
+LOCAL_CFLAGS += -Os
+LOCAL_MODULE := libicui18n_static
 include $(BUILD_STATIC_LIBRARY)
