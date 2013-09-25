@@ -11,11 +11,9 @@ LOCAL_SRC_FILES:= \
 	CursorWindow.cpp
 #	net_sqlcipher_database_sqlcipher_SQLiteDebug.cpp
 
-LOCAL_C_INCLUDES += \
-	$(LOCAL_PATH)/include \
-
 LOCAL_STATIC_LIBRARIES := \
-	android-platform-utils \
+	android_platform_utils \
+	android_platform_utils_static \
 	liblog_static \
 	libicuuc_static \
 	libsqlcipher \
