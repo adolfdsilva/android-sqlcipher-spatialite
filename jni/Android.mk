@@ -15,10 +15,13 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/include \
 
 LOCAL_STATIC_LIBRARIES := \
-    libicuuc_static \
-    libsqlcipher_android \
-    libnativehelper_static \
-    libspatialite
+	android-platform-utils \
+	liblog_static \
+	libicuuc_static \
+	libsqlcipher \
+	libsqlite3_android \
+	libnativehelper_static \
+	libspatialite
 
 # libs from the NDK
 LOCAL_LDLIBS += -ldl -llog

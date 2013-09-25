@@ -1,30 +1,23 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
+ANDROID_SQLITE_PATH = android-sqlite/android
+
 # these are all files from various external git repos
 libsqlite3_android_local_src_files := \
-        android-sqlite/android/sqlite3_android.cpp \
-        android-sqlite/android/PhonebookIndex.cpp \
-        android-sqlite/android/PhoneNumberUtils.cpp \
-        android-sqlite/android/OldPhoneNumberUtils.cpp \
-        android-sqlite/android/PhoneticStringUtils.cpp \
-        String16.cpp \
-        String8.cpp
+	PhoneNumberUtils.cpp \
+	OldPhoneNumberUtils.cpp \
+	sqlite3_android.cpp
 
-LOCAL_STATIC_LIBRARIES := libsqlcipher android-platform-utils
+libsqlite3_android_c_includes := \
+	$(LOCAL_PATH)/android-sqlite/android \
+	$(LOCAL_PATH)/../sqlcipher/sqlcipher
 
-LOCAL_CFLAGS += -fvisibility=hidden -DOS_PATH_SEPARATOR="'/'" -DHAVE_SYS_UIO_H
-
-LOCAL_C_INCLUDES := \
-        $(LOCAL_PATH)/include \
-        $(LOCAL_PATH)/android-sqlite
-
-LOCAL_MODULE := libsqlcipher_android
-LOCAL_SRC_FILES := $(libsqlite3_android_local_src_files)
-
-LOCAL_EXPORT_C_INCLUDES := \
-    $(LOCAL_PATH)/android-sqlite/android
-
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES:= $(addprefix $(ANDROID_SQLITE_PATH)/, $(libsqlite3_android_local_src_files))
+LOCAL_C_INCLUDES := $(libsqlite3_android_c_includes)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/android-sqlite/android
+LOCAL_CFLAGS += -fvisibility=hidden
+LOCAL_MODULE:= libsqlite3_android
+LOCAL_STATIC_LIBRARIES := liblog_static libicuuc_static libicui18n_static
 include $(BUILD_STATIC_LIBRARY)
-
-
