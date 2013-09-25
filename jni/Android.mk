@@ -23,6 +23,8 @@ LOCAL_STATIC_LIBRARIES := \
 	libnativehelper_static \
 	libspatialite
 
+LOCAL_CFLAGS += -fvisibility=hidden
+
 # libs from the NDK
 LOCAL_LDLIBS += -ldl -llog
 

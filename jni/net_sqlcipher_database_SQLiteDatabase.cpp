@@ -597,7 +597,7 @@ int register_android_database_SQLiteDatabase(JNIEnv *env)
 
 
 //this code is not executed 
-extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved) 
+extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 { 
 	JNIEnv *env;
 	//gJavaVM = vm;
