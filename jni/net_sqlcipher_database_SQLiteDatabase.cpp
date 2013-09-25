@@ -24,13 +24,16 @@
 
 #include <sqlite3.h>
 #include <sqlite3_android.h>
-#include <spatialite.h>
 #include <string.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
 #include <utils/List.h>
 #include <utils/Errors.h>
 #include <ctype.h>
+
+#ifdef SQLCIPHER_WITH_SPATIALITE
+#include <spatialite.h>
+#endif
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -98,6 +101,7 @@ static void registerLoggingFunc(const char *path) {
     loggingFuncSet = true;
 }
 
+#ifdef SQLCIPHER_WITH_SPATIALITE
 static void spatialiteInit() {
    static bool spatialiteInitialized = false;
 
@@ -106,6 +110,7 @@ static void spatialiteInit() {
    spatialite_init(1);
    spatialiteInitialized = true;
 }
+#endif
 
 int native_status(JNIEnv* env, jobject object, jint operation, jboolean reset)
 {
@@ -214,7 +219,9 @@ void dbopen(JNIEnv* env, jobject object, jstring pathString, jint flags)
     // register the logging func on sqlite. needs to be done BEFORE any sqlite3 func is called.
     registerLoggingFunc(path8);
 
+#ifdef SQLCIPHER_WITH_SPATIALITE
     spatialiteInit();
+#endif
 
     // convert our flags into the sqlite flags
     if (flags & CREATE_IF_NECESSARY) {

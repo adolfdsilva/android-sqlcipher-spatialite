@@ -1,3 +1,6 @@
+#comment out to build without spatialite
+SQLCIPHER_WITH_SPATIALITE ?= 1
+
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
@@ -19,7 +22,11 @@ LOCAL_STATIC_LIBRARIES := \
 	libsqlcipher \
 	libsqlite3_android \
 	libnativehelper_static \
-	libspatialite
+
+ifeq ($(SQLCIPHER_WITH_SPATIALITE), 1)
+LOCAL_STATIC_LIBRARIES += libspatialite
+LOCAL_CFLAGS += -DSQLCIPHER_WITH_SPATIALITE
+endif
 
 LOCAL_CFLAGS += -fvisibility=hidden
 
