@@ -6,6 +6,8 @@ local_src_files := \
     libnativehelper/JniConstants.cpp \
     libnativehelper/toStringArray.cpp
 
+LOCAL_CFLAGS += -fvisibility=hidden
+
 LOCAL_SRC_FILES := $(local_src_files)
 LOCAL_STATIC_LIBRARIES := liblog_static
 LOCAL_MODULE := libnativehelper_static
