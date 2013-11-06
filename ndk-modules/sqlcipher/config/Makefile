@@ -88,7 +88,7 @@ TCC += $(OPTS)
 #
 VERSION = 3.8
 VERSION_NUMBER = 3008000
-RELEASE = 3.8.0.1
+RELEASE = 3.8.0.2
 
 # Filename extensions
 #
